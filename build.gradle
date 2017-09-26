@@ -1,0 +1,50 @@
+plugins {
+  id 'java'
+  id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
+description = 'DerpTransport'
+project.version = '1.0.0'
+
+repositories {
+  mavenCentral()
+
+  // Spigot
+  maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+
+  // WorldGuard
+  maven { url "http://maven.sk89q.com/repo/" }
+
+  // RedProtect
+  maven { url "https://raw.github.com/FabioZumbi12/RedProtect/mvn-repo/" }
+  maven { url "http://nexus.hc.to/content/repositories/pub_releases" }
+  maven { url "http://repo.extendedclip.com/content/repositories/placeholderapi/" }
+  maven { url "http://repo.dmulloy2.net/nexus/repository/public/" }
+  maven { url "http://repo.ess3.net/content/groups/essentials/" }
+  maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
+  maven { url "http://repo.ess3.net/content/repositories/kitteh/" }
+}
+
+dependencies {
+  // Spigot
+  compile group: 'org.bukkit', name: 'bukkit', version: '1.12.2-R0.1-SNAPSHOT'
+
+  // WorldGuard
+  compile group: 'com.sk89q', name: 'worldguard', version: '6.1.1-SNAPSHOT'
+
+  // RedProtect
+  compile group: 'br.net.fabiozumbi12.RedProtect', name: 'RedProtect-Spigot', version: '7.3.0'
+}
+
+configurations {
+  // Don't package dependencies into shadowed JAR.
+  runtime.exclude module: 'bukkit'
+  runtime.exclude module: 'worldguard'
+  runtime.exclude module: 'RedProtect-Spigot'
+}
+
+shadowJar {
+  manifest {
+    attributes 'Implementation-Title': description, 'Implementation-Version': project.version
+  }
+}

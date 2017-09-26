@@ -1,0 +1,4 @@
+randomregions:
+  region:
+    min: 250
+    max: 5000

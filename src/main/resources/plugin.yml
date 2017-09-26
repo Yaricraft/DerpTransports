@@ -1,0 +1,8 @@
+name: DerpTransport
+main: com.yaricraft.derptransport.DerpTransport
+version: 1.0.0
+depend: [WorldGuard]
+commands:
+  derptransport:
+    description: Setup transports.
+    aliases: [dt]
