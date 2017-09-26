@@ -89,34 +89,31 @@ public class DerpTransport extends JavaPlugin implements Listener, CommandExecut
 
         this.saveConfig();
 
+        sender.sendMessage("Teleporter successfully setup on region '" + regionName + ".");
+
         return true;
     }
 
     private WorldGuardPlugin getWorldGuard() throws NullPointerException {
         Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
 
-        return (plugin == null || !(plugin instanceof WorldGuardPlugin)) ? (WorldGuardPlugin) plugin : null;
+        return plugin != null && plugin instanceof WorldGuardPlugin ? (WorldGuardPlugin) plugin : null;
     }
 
     private RedProtect getRedProtect() {
         Plugin plugin = getServer().getPluginManager().getPlugin("RedProtect");
 
-        return (plugin == null || !(plugin instanceof RedProtect)) ? (RedProtect) plugin : null;
+        return plugin != null && plugin instanceof RedProtect ? (RedProtect) plugin : null;
     }
 
     // Task to check location of players.
     @Override
     public void run() {
         Plugin plugin = this;
-        WorldGuardPlugin wg;
-
+        WorldGuardPlugin wg = getWorldGuard();
         List<ProtectedRegion> effectiveregions = new ArrayList<>();
 
-        try {
-            wg = getWorldGuard();
-        } catch (NullPointerException e) {
-            return;
-        }
+        if (wg == null) return;
 
         Bukkit.getWorlds().forEach(world -> {
             Map<String, ProtectedRegion> allregions = wg.getRegionManager(world).getRegions();
